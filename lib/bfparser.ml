@@ -7,16 +7,6 @@ open Parserutil
 
 (*
 
-    match ch with
-    | '+' -> auxparse s (n+1) st (Inc :: acc)
-    | '-' -> auxparse s (n+1) st (Dec :: acc)
-    | '>' -> auxparse s (n+1) st (Rgt :: acc)
-    | '<' -> auxparse s (n+1) st (Lft :: acc)
-    | '.' -> auxparse s (n+1) st (Opt :: acc)
-    | ',' -> auxparse s (n+1) st (Ipt :: acc)
-    | '[' -> auxparse s (n+1) (n::st) (Jez n :: acc)
-    | ']' -> ...
-
 grammar
 --------------------------------
 oper := + | - | > | < | . | , 
