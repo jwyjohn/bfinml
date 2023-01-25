@@ -111,46 +111,5 @@ let runtillhalt (m : machine) =
   let cnt, output = auxruntill 2147483647 m "" 0 in
   print_int cnt ; print_newline () ; print_endline output
 
-(* Old parser *)
-
-
-exception InvalidCharInParsing of char
-exception ParenthesNotMatch of int
-
-let rec reverse l = 
-  match l with
-  | [] -> []
-  | x::xs -> (reverse xs) @ [x]
-
-let rec replacejez i j l = 
-  match l with
-  | [] -> []
-  | x::xs ->
-      (match x with
-       | Jez a -> if a = i then (Jez j)::(replacejez i j xs) else x::(replacejez i j xs)
-       | _ -> x::(replacejez i j xs))
-
-let rec auxparse (s : string) (n : int) (st : int list) acc = 
-  if n >= String.length s 
-  then acc
-  else
-    let ch = String.get s n in 
-    match ch with
-    | '+' -> auxparse s (n+1) st (Inc :: acc)
-    | '-' -> auxparse s (n+1) st (Dec :: acc)
-    | '>' -> auxparse s (n+1) st (Rgt :: acc)
-    | '<' -> auxparse s (n+1) st (Lft :: acc)
-    | '.' -> auxparse s (n+1) st (Opt :: acc)
-    | ',' -> auxparse s (n+1) st (Ipt :: acc)
-    | '[' -> auxparse s (n+1) (n::st) (Jez n :: acc)
-    | ']' -> 
-      (match st with
-       | x::xs -> auxparse s (n+1) xs (Jmp (x-1) :: (replacejez x n acc))
-       | [] -> raise (ParenthesNotMatch n))
-    | _ -> raise (InvalidCharInParsing ch)
-
-
-
-let parse (s : string) = reverse (auxparse s 0 [] [])
 
 
