@@ -11,6 +11,7 @@ grammar
 --------------------------------
 oper := + | - | > | < | . | , 
 stmt := loop stmt | oper stmt | oper | loop
+loop := [ stmt ]
 
 *)
 
