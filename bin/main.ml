@@ -1,6 +1,9 @@
+[@@@warning "-32"] 
 [@@@warning "-33"] 
 
-open Bfinml.Bfcore
+
+open Bfinml.Vmcore
+open Bfinml.Bfcompiler
 
 let makeinsts il initv = 
   match il with
@@ -12,7 +15,7 @@ let hello = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+
 let mymachine = 
   { halt = false; 
     input = []; 
-    inst = makeinsts (parse hello) ERR;
+    inst = makeinsts (compilebf hello) ERR;
     data = makeinsts [] (Char.chr 0) 
   }
 

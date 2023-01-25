@@ -2,4 +2,4 @@
  (public_name bfinml)
  (name bfinml)
  (libraries base)
- (modules bfcore))
+ (modules vmcore bfcompiler bfparser parserutil))

@@ -1,5 +1,3 @@
-(* open Base *)
-
 [@@@warning "-27"]
 [@@@warning "-32"]
 [@@@warning "-39"] 
@@ -59,7 +57,7 @@ type instruction =
   | Jmp of int
   | ERR
 
-type code = instruction list
+type bfcode = instruction list
 
 type machine = {halt : bool; input : char list; inst : instruction memory; data : char memory}
 
@@ -113,6 +111,9 @@ let runtillhalt (m : machine) =
   let cnt, output = auxruntill 2147483647 m "" 0 in
   print_int cnt ; print_newline () ; print_endline output
 
+(* Old parser *)
+
+
 exception InvalidCharInParsing of char
 exception ParenthesNotMatch of int
 
@@ -121,7 +122,7 @@ let rec reverse l =
   | [] -> []
   | x::xs -> (reverse xs) @ [x]
 
-let rec replacejez i j (l : code) = 
+let rec replacejez i j l = 
   match l with
   | [] -> []
   | x::xs ->
@@ -129,7 +130,7 @@ let rec replacejez i j (l : code) =
        | Jez a -> if a = i then (Jez j)::(replacejez i j xs) else x::(replacejez i j xs)
        | _ -> x::(replacejez i j xs))
 
-let rec auxparse (s : string) (n : int) (st : int list) (acc : code) : code = 
+let rec auxparse (s : string) (n : int) (st : int list) acc = 
   if n >= String.length s 
   then acc
   else
@@ -150,6 +151,6 @@ let rec auxparse (s : string) (n : int) (st : int list) (acc : code) : code =
 
 
 
-let parse (s : string) : code = reverse (auxparse s 0 [] [])
+let parse (s : string) = reverse (auxparse s 0 [] [])
 
 
